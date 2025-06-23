@@ -1,5 +1,6 @@
 from controller.dao_algortimo import DaoAlgoritmo
 from flask import Flask, request, jsonify, render_template
+import time
 app = Flask(__name__)
 dao_algoritmo = DaoAlgoritmo()
 @app.route('/')
@@ -11,7 +12,7 @@ def ordenar():
     data = request.json
     algoritmo = data.get('algoritmo')
     arr = data.get('arr')
-
+    tiempo_inicio = time.time()
     if algoritmo == 'quick':
         sorted_arr = dao_algoritmo.ordenar_quick(arr)
     elif algoritmo == 'bubble':
@@ -24,8 +25,14 @@ def ordenar():
         sorted_arr = dao_algoritmo.ordenar_timsort(arr)
     else:
         return jsonify({'error': 'Algoritmo no soportado'}), 400
+    tiempo_fin = time.time()
+    tiempo_ejecucion = tiempo_fin - tiempo_inicio
 
-    return jsonify({'sorted_array': sorted_arr})
+    return jsonify({
+        'sorted_array': sorted_arr,
+        'execution_time': tiempo_ejecucion
+    })
+
 
 
 if __name__ == '__main__':

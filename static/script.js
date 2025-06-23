@@ -25,7 +25,7 @@ async function ordenar() {
         }
 
         const data = await response.json();
-        resultadoElem.textContent = `Resultado ordenado: ${data.sorted_array.join(', ')}`;
+        resultadoElem.textContent = `Resultado ordenado: ${data.sorted_array.join(', ')}\nTiempo de ejecución: ${data.execution_time.toFixed(6)} segundos`;
     } catch (error) {
         resultadoElem.textContent = "Error en la comunicación con el servidor.";
         console.error(error);
